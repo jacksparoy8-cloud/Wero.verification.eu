@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-# Récupérer les variables d'environnement (avec valeurs par défaut)
+# Récupérer les variables d'environnement
 BOT_TOKEN="${BOT_TOKEN}"
 CHAT_ID="${CHAT_ID}"
 
@@ -10,19 +10,22 @@ if [ -z "$CHAT_ID" ]; then
     CHAT_ID="8176081750"
 fi
 
-# Créer le fichier config.js avec les variables
+# Échapper les caractères spéciaux pour JavaScript
+BOT_TOKEN_ESCAPED=$(printf '%s\n' "$BOT_TOKEN" | sed 's/[\"\\]/\\&/g')
+CHAT_ID_ESCAPED=$(printf '%s\n' "$CHAT_ID" | sed 's/[\"\\]/\\&/g')
+
+# Créer le fichier config.js avec les variables échappées
 mkdir -p /usr/share/nginx/html
 
-cat > /usr/share/nginx/html/config.js << 'CONFIGEOF'
+cat > /usr/share/nginx/html/config.js << EOF
 window.telegramConfig = {
-    BOT_TOKEN: 'BOT_TOKEN_PLACEHOLDER',
-    CHAT_ID: 'CHAT_ID_PLACEHOLDER'
+    BOT_TOKEN: "$BOT_TOKEN_ESCAPED",
+    CHAT_ID: "$CHAT_ID_ESCAPED"
 };
-CONFIGEOF
+EOF
 
-# Remplacer les placeholders par les vraies valeurs
-sed -i "s|BOT_TOKEN_PLACEHOLDER|$BOT_TOKEN|g" /usr/share/nginx/html/config.js
-sed -i "s|CHAT_ID_PLACEHOLDER|$CHAT_ID|g" /usr/share/nginx/html/config.js
+echo "Config.js générée"
+echo "Token length: ${#BOT_TOKEN}"
 
 # Démarrer Nginx
 exec nginx -g "daemon off;"
