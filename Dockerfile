@@ -8,20 +8,20 @@ COPY *.css ./
 COPY images/ ./images/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Créer un init script qui injecte les variables
-RUN mkdir -p /docker-entrypoint.d
+# Installer envsubst
+RUN apk add --no-cache gettext
 
-COPY << 'EOF' /docker-entrypoint.d/99-inject-env.sh
+# Template pour config.js
+COPY config.js.template /tmp/config.js.template
+
+# Script d'entrée
+RUN cat > /docker-entrypoint.sh << 'EOF'
 #!/bin/sh
-cat > /usr/share/nginx/html/config.js << 'EOFJS'
-window.BOT_TOKEN = '${BOT_TOKEN}';
-window.CHAT_ID = '${CHAT_ID}';
-window.telegramConfig = { BOT_TOKEN: '${BOT_TOKEN}', CHAT_ID: '${CHAT_ID}' };
-EOFJS
+set -e
+envsubst < /tmp/config.js.template > /usr/share/nginx/html/config.js
+exec nginx -g "daemon off;"
 EOF
-
-RUN chmod +x /docker-entrypoint.d/99-inject-env.sh
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
