@@ -1,0 +1,52 @@
+<style>
+.bank-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+    gap: 2rem !important;
+    flex-direction: unset !important;
+}
+
+.bank-card {
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.bank-card:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: scale(1.1) !important;
+}
+
+.bank-logo-box {
+    width: 100px !important;
+    height: 100px !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+.bank-card:hover .bank-logo-box {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15) !important;
+    background-color: #FFF69C !important;
+}
+
+.bank-name {
+    display: none !important;
+}
+
+.bank-arrow-box {
+    display: none !important;
+}
+
+.search-container {
+    display: none !important;
+}
+
+.country-selector {
+    display: none !important;
+}
+</style>

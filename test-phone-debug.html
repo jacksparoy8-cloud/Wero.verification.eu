@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Téléphone</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #FFF69C; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
+        input { padding: 10px; font-size: 16px; width: 100%; margin: 10px 0; border: 1px solid black; border-radius: 5px; }
+        p { margin: 15px 0; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Format Téléphone +33</h1>
+        <p>Entrez 10 chiffres - format attendu: +33 0 XX XX XX XX</p>
+        <input type="tel" id="phone" placeholder="+33 0 00 00 00 00">
+        <p id="debug"></p>
+    </div>
+    
+    <script>
+        const phone = document.getElementById('phone');
+        const debug = document.getElementById('debug');
+        
+        phone.addEventListener('input', (e) => {
+            // Garder seulement les chiffres (pas le +33)
+            let value = e.target.value;
+            console.log('Valeur brute:', value);
+            
+            // Extraire SEULEMENT les chiffres qui ne sont pas le +33 au début
+            let digits = value.replace(/\D/g, '');
+            console.log('Tous les chiffres:', digits);
+            
+            // Si ça commence par 33, on le retire
+            if (digits.startsWith('33')) {
+                digits = digits.substring(2);
+            }
+            
+            // Limiter à 10 chiffres
+            digits = digits.slice(0, 10);
+            console.log('Chiffres finaux:', digits, 'Longueur:', digits.length);
+            
+            // Construire le format
+            let formatted = '+33 ';
+            if (digits.length >= 1) formatted += digits[0];
+            if (digits.length >= 2) formatted += ' ' + digits.substring(1, 3);
+            if (digits.length >= 4) formatted += ' ' + digits.substring(3, 5);
+            if (digits.length >= 6) formatted += ' ' + digits.substring(5, 7);
+            if (digits.length >= 8) formatted += ' ' + digits.substring(7, 10);
+            
+            console.log('Formaté:', formatted);
+            e.target.value = formatted;
+            debug.textContent = 'Formaté: ' + formatted + ' | Chiffres: ' + digits.length;
+        });
+    </script>
+</body>
+</html>
