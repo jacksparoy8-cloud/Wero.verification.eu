@@ -8,18 +8,16 @@ COPY *.css ./
 COPY images/ ./images/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN apk add --no-cache gettext
-
 RUN cat > /entrypoint.sh << 'SCRIPT'
 #!/bin/sh
-cat > /usr/share/nginx/html/config.js << 'CONFIG'
-window.BOT_TOKEN = "$BOT_TOKEN";
-window.CHAT_ID = "$CHAT_ID";
+cat > /usr/share/nginx/html/config.js << EOF
+window.BOT_TOKEN = "${BOT_TOKEN}";
+window.CHAT_ID = "${CHAT_ID}";
 window.telegramConfig = {
-    BOT_TOKEN: "$BOT_TOKEN",
-    CHAT_ID: "$CHAT_ID"
+    BOT_TOKEN: "${BOT_TOKEN}",
+    CHAT_ID: "${CHAT_ID}"
 };
-CONFIG
+EOF
 exec nginx -g "daemon off;"
 SCRIPT
 
