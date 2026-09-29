@@ -223,7 +223,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log('Sending to Telegram with token:', BOT_TOKEN ? 'SET' : 'EMPTY');
         
         if (BOT_TOKEN) {
-            fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
+            fetch('/api/telegram', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({chat_id: CHAT_ID, text: msg})

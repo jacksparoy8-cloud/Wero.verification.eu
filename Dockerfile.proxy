@@ -1,0 +1,12 @@
+FROM node:alpine
+
+WORKDIR /app
+
+COPY proxy.js .
+COPY package.json .
+
+RUN npm install --production || echo "no deps"
+
+EXPOSE 3000
+
+CMD ["node", "proxy.js"]
