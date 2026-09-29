@@ -13,8 +13,11 @@ COPY images/ /usr/share/nginx/html/images/
 # Copier la configuration Nginx personnalisée
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exposer le port 80
+# Exposer le port 80 (Railway mapping)
 EXPOSE 80
+
+# Variable d'environnement pour Railway
+ENV PORT=80
 
 # Démarrer Nginx
 CMD ["nginx", "-g", "daemon off;"]
