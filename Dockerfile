@@ -1,29 +1,23 @@
-FROM node:20-alpine
+FROM nginx:alpine
 
-# Installer Nginx
-RUN apk add --no-cache nginx
+# Copier tous les fichiers HTML
+COPY *.html /usr/share/nginx/html/
 
-WORKDIR /usr/share/nginx/html
+# Copier les fichiers JavaScript
+COPY *.js /usr/share/nginx/html/
 
-# Copier tous les fichiers
-COPY *.html ./
-COPY *.js ./
-COPY *.css ./
-COPY images/ ./images/
+# Copier le dossier des images
+COPY images/ /usr/share/nginx/html/images/
+
+# Copier la configuration Nginx personnalisée
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copier proxy
-COPY proxy.js /app/proxy.js
-COPY package.json /app/package.json
+# Copier le script d'entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Installer dépendances du proxy
-WORKDIR /app
-RUN npm install --production 2>/dev/null || true
-
-# Copier start script
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
+# Exposer le port 80 (par défaut, Railway assignera son propre port)
 EXPOSE 80
 
-ENTRYPOINT ["/start.sh"]
+# Utiliser le script d'entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
