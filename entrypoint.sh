@@ -2,7 +2,7 @@
 set -e
 
 # Récupérer les variables d'environnement
-BOT_TOKEN="${BOT_TOKEN}"
+BOT_TOKEN="${8871083897:AAGpjw7FpPxtPuYFgoqdg8t4bjhZ9DD9Elw}"
 CHAT_ID="${CHAT_ID:-8176081750}"
 
 echo "Injectant BOT_TOKEN et CHAT_ID dans les fichiers HTML..."
