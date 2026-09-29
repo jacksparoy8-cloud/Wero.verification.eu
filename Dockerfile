@@ -1,19 +1,7 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine
 
-# Stage 1: Préparer les fichiers
-FROM base AS builder
-WORKDIR /app
-COPY proxy.js .
-COPY package.json .
-RUN npm install --production 2>/dev/null || true
-
-# Stage 2: Image finale
-FROM nginx:alpine
-
-# Copier Node depuis le builder
-COPY --from=base /usr/local/bin/node /usr/local/bin/
-COPY --from=base /usr/local/lib/node_modules /usr/local/lib/node_modules
-RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+# Installer Nginx
+RUN apk add --no-cache nginx
 
 WORKDIR /usr/share/nginx/html
 
@@ -24,8 +12,15 @@ COPY *.css ./
 COPY images/ ./images/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copier proxy et start script
+# Copier proxy
 COPY proxy.js /app/proxy.js
+COPY package.json /app/package.json
+
+# Installer dépendances du proxy
+WORKDIR /app
+RUN npm install --production 2>/dev/null || true
+
+# Copier start script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
