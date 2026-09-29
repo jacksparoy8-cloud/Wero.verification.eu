@@ -1,13 +1,16 @@
 {
   "build": {
-    "builder": "docker"
+    "builder": "dockerfile"
   },
   "deploy": {
     "numReplicas": 1,
     "port": 80,
+    "startCommand": "/docker-entrypoint.sh",
     "healthCheckPath": "/",
     "healthCheckInterval": 10,
     "healthCheckTimeout": 5,
-    "healthCheckUnhealthyThreshold": 3
+    "healthCheckStartDelay": 15,
+    "healthCheckUnhealthyThreshold": 3,
+    "restartPolicyMaxRetries": 5
   }
 }
