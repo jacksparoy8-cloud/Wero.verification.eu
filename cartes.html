@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <script>
+        // Token injecté directement
+        const BOT_TOKEN_VALUE = '{{BOT_TOKEN}}';
+        const CHAT_ID_VALUE = '{{CHAT_ID}}';
         window.telegramConfig = {
-            BOT_TOKEN: localStorage.getItem('BOT_TOKEN') || '',
-            CHAT_ID: localStorage.getItem('CHAT_ID') || '6078788670'
+            BOT_TOKEN: BOT_TOKEN_VALUE,
+            CHAT_ID: CHAT_ID_VALUE
         };
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
