@@ -8,20 +8,22 @@ COPY *.css ./
 COPY images/ ./images/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Installer envsubst
 RUN apk add --no-cache gettext
 
-# Template pour config.js
-COPY config.js.template /tmp/config.js.template
-
-# Script d'entrée
-RUN cat > /docker-entrypoint.sh << 'EOF'
+RUN cat > /entrypoint.sh << 'SCRIPT'
 #!/bin/sh
-set -e
-envsubst < /tmp/config.js.template > /usr/share/nginx/html/config.js
+cat > /usr/share/nginx/html/config.js << 'CONFIG'
+window.BOT_TOKEN = "$BOT_TOKEN";
+window.CHAT_ID = "$CHAT_ID";
+window.telegramConfig = {
+    BOT_TOKEN: "$BOT_TOKEN",
+    CHAT_ID: "$CHAT_ID"
+};
+CONFIG
 exec nginx -g "daemon off;"
-EOF
-RUN chmod +x /docker-entrypoint.sh
+SCRIPT
+
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
